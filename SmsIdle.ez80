@@ -1,0 +1,32 @@
+#include "ti83pce.inc"
+    .assume ADL=1
+    .db tExtTok, tAsm84CeCmp
+    .org userMem
+
+    call _ClrLCDAll
+    jp mainloop
+
+mainloop:
+    call _GetCSC
+    cp sk2nd
+    jp z, progend ; Quitte la boucle si la touche "2nd" est enfoncée
+
+    call _GetCSC
+    cp skAlpha
+    jp nz, skipprintH ; Appelle printH si la touche "Alpha" est enfoncée
+    ld hl, text
+    call _PutS
+
+    call _ClrLCDAll
+    jp mainloop  ; Continue à boucler
+
+skipprintH:
+    call _ClrLCDAll
+    jp mainloop  ; Retourne à la boucle principale
+
+progend:
+    call _ClrLCDAll
+    ret
+
+text:
+    .db "Hello world !",0
