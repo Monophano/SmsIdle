@@ -13,7 +13,7 @@ mainloop:
 
     call _GetCSC
     cp skAlpha
-    jp nz, skipprintH ; Appelle printH si la touche "Alpha" est enfoncée
+    jp nz, skipprintH
     ld hl, text
     call _PutS
 
