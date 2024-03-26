@@ -4,24 +4,29 @@
     .org userMem
 
     call _ClrLCDAll
+    call _CanAlphIns
     jp mainloop
 
 mainloop:
     call _GetCSC
-    cp sk2nd
-    jp z, progend ; Quitte la boucle si la touche "2nd" est enfoncée
+    cp skClear
+    jp z, progend ; Quitte la boucle si la touche "Clear" est enfoncée
 
     call _GetCSC
-    cp skAlpha
-    jp nz, skipprintH
-    ld hl, text
-    call _PutS
+    cp sk2nd
+    jp z, print
 
     call _ClrLCDAll
     jp mainloop  ; Continue à boucler
 
-skipprintH:
-    call _ClrLCDAll
+print:
+    ld hl, $04
+    ld (curRow), hl
+    ld hl, $06
+    ld (curCol), hl
+    ld hl, text
+    call _PutS
+    call _getkey
     jp mainloop  ; Retourne à la boucle principale
 
 progend:
