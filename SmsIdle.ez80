@@ -1,3 +1,4 @@
+; https://tiplanet.org/forum/viewtopic.php?t=19652
 #include "ti83pce.inc"
     .assume ADL=1
     .db tExtTok, tAsm84CeCmp
