@@ -9,15 +9,16 @@
     jp mainloop
 
 mainloop:
+    ; Keyboard event section
     call _GetCSC
-    cp skClear
-    jp z, progend ; Quitte la boucle si la touche "Clear" est enfoncée
+    cp skClear ; check for "clear"
+    jp z, progend ; if ok then leave app
+    cp sk2nd ; check for "2nd"
+    jp z, print ; if ok then print some beautiful text
 
-    call _GetCSC
-    cp sk2nd
-    jp z, print
-
+    ; Display section
     call _ClrLCDAll
+
     jp mainloop  ; Continue à boucler
 
 print:
@@ -27,7 +28,6 @@ print:
     ld (curCol), hl
     ld hl, text
     call _PutS
-    call _getkey
     jp mainloop  ; Retourne à la boucle principale
 
 progend:
